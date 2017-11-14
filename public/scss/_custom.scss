@@ -1,0 +1,47 @@
+// Here you can add other styles
+.login-bg{
+	background-image: url('../img/bg/bg1.jpg');
+	background-size: cover;
+}
+
+$primary-c : #7367F0;
+
+.card{
+	.preview{
+		padding: 1.25rem 1.25rem 1rem 1.25rem;
+		background: rgba(0,0,0,0.05);
+	}
+}
+
+.message-card{
+	background: #F9F9F9;
+	.message-table tbody tr td:last-child{
+		text-align: right;
+	}
+}
+
+.message-send{
+	textarea{
+		margin-top: 10px;
+	}
+	.subscriber-list tbody tr:hover,
+	.subscriber-individual tbody tr:hover,{
+		cursor: pointer;
+	}
+	.tab-content{
+		margin-top: -1px;
+    	background: #fff;
+    	border: 0px solid $primary-c;
+	}
+	.tab-content .tab-pane{
+		padding: 0px;
+	}
+	.subscriber-individual tbody tr td:nth-child(3){
+		text-align: right;
+	}
+}
+
+.border-primary{
+	border: 1px solid $primary-c;
+}
+ 
