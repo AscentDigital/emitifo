@@ -27,7 +27,7 @@ class AddStatusAndDropTotalSmsInMessagesTable extends Migration
     public function down()
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->dropColumns('status');
+            $table->dropColumn(['status']);
             $table->integer('total_sms')->nullable();
         });
     }

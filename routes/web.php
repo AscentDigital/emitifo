@@ -36,3 +36,8 @@ Route::get('/subscribers', 'SubscribersController@show');
 Route::get('/dashboard','DashboardController@show');
 
 Route::get('/api/inbound', 'InboundSmsController@receive');
+
+
+Route::get('/admin/', 'AdminHomeController@show');
+
+Route::get('/admin/companies/create', 'CompaniesController@create');

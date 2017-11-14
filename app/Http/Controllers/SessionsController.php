@@ -25,7 +25,18 @@ class SessionsController extends Controller
 			]);
 		}
 
-		return redirect('/dashboard');
+		$user = auth()->user();
+		switch ($user->type) {
+			case 'admin':
+				$redirect = '/admin';
+				break;
+			
+			default:
+				$redirect = '/dashboard';
+				break;
+		}
+
+		return redirect($redirect);
 	}
 
 	public function destroy(){
