@@ -12,7 +12,7 @@ class AdminHomeController extends Controller
     }
 
     public function show(){
-    	$messages = auth()->user()->company->messages()->orderBy('created_at', 'DESC')->limit(10)->get();
+    	$messages = Message::orderBy('created_at', 'DESC')->limit(10)->get();
     	return view('admin.home', ['title' => 'Dashboard', 'messages' => $messages]);
     }
 }
