@@ -75,9 +75,8 @@
                     <div class="dropdown-header text-center">
                         <strong>Account</strong>
                     </div> 
-                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a> 
-                    <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Campaigns<span class="badge badge-primary">42</span></a>
+                    <a class="dropdown-item" href="/profile/"><i class="fa fa-user"></i> Profile</a>
+                    <a class="dropdown-item" href="/company/"><i class="fa fa-wrench"></i> Company Settings</a> 
                     <div class="divider"></div> 
                     <a class="dropdown-item" href="/logout"><i class="fa fa-lock"></i> Logout</a>
                 </div>

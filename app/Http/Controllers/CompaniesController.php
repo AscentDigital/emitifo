@@ -13,4 +13,8 @@ class CompaniesController extends Controller
     public function create(){
     	return view('admin.companies.create', ['title' => 'Create Company']);
     }
+
+    public function show(){
+    	return view('admin.companies.show');
+    }
 }
