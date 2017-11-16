@@ -11,7 +11,7 @@
     <meta name="keyword" content="SMS campaign marketing phones health medical HIV AIDS">
     <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-    <title>@if(isset($title)){{ $title }}@else PrepSms @endif</title>
+    <title>@if(isset($title)){{ $title }}@else Emitifo @endif</title>
 
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
