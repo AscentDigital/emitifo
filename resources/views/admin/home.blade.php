@@ -18,20 +18,6 @@
 <div class="container-fluid"> 
 	<div class="animated fadeIn">
 		<div class="row">
-			<div class="col-md-12">
-				<div class="card text-white bg-default bg-card" style="background-image:url('img/bg/bg1.jpg')">
-					<div class="row">
-						<div class="col-md-3">
-							<div class="dash-logo" style="background-image:url('img/tlogo.png')">
-							</div>
-						</div>
-						<div class="col-md-8 profile-text">
-							<h1 class="profile-hd">Prep SMS</h1>
-							<h5 class="profile-shd">Lorem ipsum dolor sit amet, </h5>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="col-lg-4 col-md-12 col-sm-12">
 				<div class="card text-white bg-primary" style="height: 300px;">
 					<div class="card-body pb-0">
