@@ -41,6 +41,7 @@ Route::get('/api/inbound', 'InboundSmsController@receive');
 Route::get('/admin/', 'AdminHomeController@show');
 
 Route::get('/admin/companies/create', 'CompaniesController@create');
+Route::post('/admin/companies/create', 'CompaniesController@store');
 Route::get('/admin/companies/edit', 'CompaniesController@edit');
 Route::get('/admin/companies/', 'CompaniesController@show');
 

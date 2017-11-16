@@ -28,14 +28,14 @@
                                 <div class="preview">
                                     <div class="row">
                                         <div class="col-xs-6 col-lg-8">
-                                            <form action="" method="post" class="form-horizontal">
+                                            <form action="/admin/companies" method="GET" class="form-horizontal">
                                         <div class="form-group row">
                                             <div class="col-md-12">
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                                                     </span>
-                                                    <input type="text" id="search-company" name="search-company" class="form-control" placeholder="Search company...">
+                                                    <input type="text" id="search-company" name="s" class="form-control" placeholder="Search company..." value="{{ Request::query('s') }}">
                                                 </div>
                                             </div>
                                         </div> 
@@ -58,33 +58,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($companies as $company)
                                             <tr>
-                                                <td>PrEP Advisory</td>
-                                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.</td>
-                                                <td>+100-3018-203</td>
-                                                <td>PrEP@advisory</td>
-                                                <td>08/22/2017 11:30AM</td> 
-                                                <td><a href ="/admin/companies/edit" class ="btn btn-primary" title ="Edit"><i class="fa fa-pencil"></i></a> <a href ="#" class ="btn btn-danger" data-toggle="modal" data-target="#removeModal" title ="Remove"><i class="fa fa-remove"></i></a></td> 
+                                                <td>{{ $company->title }}</td>
+                                                <td>{{ $company->description }}</td>
+                                                <td>{{ $company->contact }}</td>
+                                                <td>{{ $company->email }}</td>
+                                                <td>{{ $company->created_at->diffForHumans() }}</td> 
+                                                <td><a href ="/admin/companies/{{ $company->slug }}/edit" class ="btn btn-primary" title ="Edit"><i class="fa fa-pencil"></i></a> <a href ="#" class ="btn btn-danger" data-toggle="modal" data-target="#removeModal" title ="Remove"><i class="fa fa-remove"></i></a></td> 
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 <div class="card-body">
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#">Prev</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="#">1</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">4</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
+                                    {{ $companies->appends(Request::except('page'))->links('vendor.pagination.bootstrap-4') }}
                                 </div>
                             </div>
                          </div>

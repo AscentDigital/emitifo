@@ -6,7 +6,7 @@
     <li class="breadcrumb-item">Create Company</li>  
 </ol>
 
-<form method="POST" action="/admin/create" enctype="multipart/form-data">
+<form method="POST" action="/admin/companies/create" enctype="multipart/form-data">
   {{ csrf_field() }}
 <div class="container-fluid"> 
     <div class="animated fadeIn">
@@ -17,6 +17,7 @@
                     <i class="fa fa-bank"></i> Company
                 </div>
                 <div class="card-body">
+                  @include('layouts.partials.alerts')
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card text-white bg-default bg-card" id ="backdrop" style="background-image:url('/img/bg/bg1.jpg')">
@@ -45,19 +46,19 @@
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Company Name</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Emitifo" name="title" value="{{ old('title') }}">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Emitifo" name="title" value="{{ old('title') }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput2">Company Description</label>
-                        <textarea type="email" class="form-control" id="exampleFormControlInput2" name="description">{{ old('description') }}</textarea>
+                        <textarea class="form-control" id="exampleFormControlInput2" name="description">{{ old('description') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput3">Email address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com" name="companyEmail" value="{{ old('companyEmail') }}">
+                        <input type="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com" name="company_email" value="{{ old('company_email') }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput4">Contact</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput4" placeholder="+180399999" name="contact" value="{{ old('contact') }}">
+                        <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="+180399999" name="contact" value="{{ old('contact') }}">
                     </div>
 
                 </div>
@@ -80,6 +81,11 @@
                         <span class="input-group-addon"><i class="icon-lock"></i>
                         </span>
                         <input type="password" class="form-control" placeholder="Repeat password" name="password_confirmation">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-addon"><i class="icon-user"></i>
+                        </span>
+                        <input type="email" class="form-control" placeholder="Email Address" name="email" value="{{ old('email') }}">
                     </div>
                     <h4 class="text-muted">Twillio Account Settings</h4>
                     <hr>

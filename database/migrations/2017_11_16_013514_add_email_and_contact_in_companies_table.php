@@ -14,10 +14,11 @@ class AddEmailAndContactInCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
+            $table->string('slug')->unique()->after('title');
             $table->string('email')->after('code');
             $table->string('contact')->after('email');
-            $table->string('logo')->after('contact');
-            $table->string('backdrop')->after('logo');
+            $table->string('logo')->after('contact')->default('default.png');
+            $table->string('backdrop')->after('logo')->default('default.jpg');
         });
     }
 
@@ -29,7 +30,7 @@ class AddEmailAndContactInCompaniesTable extends Migration
     public function down()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->dropColumn(['email', 'contact', 'logo', 'backdrop']);
+            $table->dropColumn(['slug', 'email', 'contact', 'logo', 'backdrop']);
         });
     }
 }
