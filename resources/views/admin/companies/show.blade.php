@@ -65,7 +65,7 @@
                                                 <td>+100-3018-203</td>
                                                 <td>PrEP@advisory</td>
                                                 <td>08/22/2017 11:30AM</td> 
-                                                <td> <a href ="#" class ="btn btn-danger" title ="Remove"><i class="fa fa-remove"></i></a></td> 
+                                                <td><a href ="/admin/companies/edit" class ="btn btn-primary" title ="Edit"><i class="fa fa-pencil"></i></a> <a href ="#" class ="btn btn-danger" data-toggle="modal" data-target="#removeModal" title ="Remove"><i class="fa fa-remove"></i></a></td> 
                                             </tr>
                                         </tbody>
                                     </table>
@@ -103,5 +103,24 @@
 
             </div>
             <!-- /.conainer-fluid -->
+<!-- Remove Modal -->
+<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Remove Modal -->
+
 <!-- End Main -->
 @endsection

@@ -17,4 +17,8 @@ class CompaniesController extends Controller
     public function show(){
     	return view('admin.companies.show');
     }
+
+    public function edit(){
+    	return view('admin.companies.edit');
+    }
 }
