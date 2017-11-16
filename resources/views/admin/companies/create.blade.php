@@ -15,7 +15,8 @@
     </li>
 </ol>
 
-
+<form method="POST" action="/admin/create" enctype="multipart/form-data">
+  {{ csrf_field() }}
 <div class="container-fluid"> 
     <div class="animated fadeIn">
      <div class="row">
@@ -32,7 +33,7 @@
                                     <div class="col-md-3">
                                         <div class="dash-logo profile-image" id = "profile" style="background-image:url('');vertical-align:middle;">
                                           <label class="btn btn-primary btn-sm pull-left btn-block" id = "change-prof" style ="margin-top:70px;display:none;">
-                                             <i class="hidden-xs-down fa fa-camera"></i> Add Photo <input type="file" name = "imgProf" id = "imgProf" style="display: none;">
+                                             <i class="hidden-xs-down fa fa-camera"></i> Add Photo <input type="file" name = "logo" id = "imgProf" style="display: none;">
                                          </label>
                                      </div>
                                  </div>
@@ -42,7 +43,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="btn btn-success animated fadeIn pull-right" style="display: none;"  id="change-cover">
-                                     <i class="hidden-xs-down fa fa-camera"></i> Change Cover Photo <input type="file" name = "imgBack" id = "imgBack" style="display: none;">
+                                     <i class="hidden-xs-down fa fa-camera"></i> Change Cover Photo <input type="file" name = "backdrop" id = "imgBack" style="display: none;">
                                  </label>
                              </div>
                          </div>
@@ -53,19 +54,19 @@
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Company Name</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Emitifo">
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Emitifo" name="title" value="{{ old('title') }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput2">Company Description</label>
-                        <textarea type="email" class="form-control" id="exampleFormControlInput2" ></textarea>
+                        <textarea type="email" class="form-control" id="exampleFormControlInput2" name="description">{{ old('description') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput3">Email address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com" name="companyEmail" value="{{ old('companyEmail') }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput4">Contact</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput4" placeholder="+180399999">
+                        <input type="email" class="form-control" id="exampleFormControlInput4" placeholder="+180399999" name="contact" value="{{ old('contact') }}">
                     </div>
 
                 </div>
@@ -75,25 +76,25 @@
                     <div class="input-group mb-3">
                         <span class="input-group-addon"><i class="icon-user"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" class="form-control" placeholder="Username" name="username" value="{{ old('username') }}">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-addon"><i class="icon-lock"></i>
                         </span>
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
 
                     <div class="input-group mb-4">
                         <span class="input-group-addon"><i class="icon-lock"></i>
                         </span>
-                        <input type="password" class="form-control" placeholder="Repeat password">
+                        <input type="password" class="form-control" placeholder="Repeat password" name="password_confirmation">
                     </div>
                     <h4 class="text-muted">Twillio Account Settings</h4>
                     <hr>
                     <div class="form-group">
-                        <label for="exampleFormControlInput5">API - Key</label>
-                        <input type="email" class="form-control disabled" id="exampleFormControlInput5" disabled>
+                        <label for="exampleFormControlInput5">Code</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput5" name="code" value="{{ old('code') }}">
                     </div>
                 </div>  
                 <div class="col-md-12">
@@ -118,6 +119,7 @@
 
 
 </div>
+</form>
 @endsection
 
 @section('script')
