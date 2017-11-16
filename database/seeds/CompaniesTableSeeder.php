@@ -13,6 +13,7 @@ class CompaniesTableSeeder extends Seeder
     {
         DB::table('companies')->insert([
             'title' => 'Sample Company',
+            'slug' => 'sample-company',
             'description' => 'Sample description',
             'code' => '12404284172'
         ]);
