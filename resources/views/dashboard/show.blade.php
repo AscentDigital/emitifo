@@ -22,7 +22,7 @@
 				<div class="card text-white bg-default bg-card" style="background-image:url('img/bg/bg1.jpg')">
 					<div class="row">
 						<div class="col-md-3">
-							<div class="dash-logo" style="background-image:url('img/tlogo.png')">
+							<div class="dash-logo" style="background-image:url('img/templogo.png')">
 							</div>
 						</div>
 						<div class="col-md-8 profile-text">
