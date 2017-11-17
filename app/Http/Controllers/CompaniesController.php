@@ -45,10 +45,10 @@ class CompaniesController extends Controller
         }
 
         $company = Company::create($company_details);
-
+        $bpass = bcrypt($request->input('password'));
         User::create([
             'username' => $request->input('username'),
-            'password' => $request->input('password'),
+            'password' => $bpass,
             'email' => $request->input('email'),
             'type' => 'user',
             'company_id' => $company->id
