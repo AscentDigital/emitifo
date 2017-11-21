@@ -38,7 +38,7 @@
 		<div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
 			<div class="card-body text-center">
 				<div>
-					<h1 style ="font-weight:900;margin-left:10px;">emitifo</h1>
+					<img src="img/logo_block.png">
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
 					<a href="#" role="button" class="btn btn-light active mt-3">Contact Us!</a>
