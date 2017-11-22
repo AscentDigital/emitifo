@@ -93,7 +93,9 @@ class CompaniesController extends Controller
             $logoname = time().'.'.$logo->getClientOriginalExtension();
             $destinationPath = public_path('logos');
             $logo->move($destinationPath, $logoname);
-            File::delete(public_path('logos') . '/' . $company->logo);
+            if($company->logo != 'default.png'){
+                File::delete(public_path('logos') . '/' . $company->logo);
+            }
             $company_details['logo'] = $logoname;
         }
 
@@ -103,7 +105,9 @@ class CompaniesController extends Controller
             $backdropname = time().'.'.$backdrop->getClientOriginalExtension();
             $destinationPath = public_path('backdrops');
             $backdrop->move($destinationPath, $backdropname);
-            File::delete(public_path('backdrops') . '/' . $company->backdrop);
+            if($company->backdrop != 'default.jpg'){
+                File::delete(public_path('backdrops') . '/' . $company->backdrop);
+            }
             $company_details['backdrop'] = $backdropname;
         }
 
