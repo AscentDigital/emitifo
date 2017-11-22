@@ -3,19 +3,21 @@
 @section('content')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin/companies/">Companies</a></li>  
-    <li class="breadcrumb-item">Edit Company</li>  
+    <li class="breadcrumb-item">Edit {{ $company->title }}</li>  
 
     <!-- Breadcrumb Menu-->
     <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group">
             <!-- <a class="btn" href="#"><i class="icon-speech"></i></a> -->
             <!-- <a class="btn" href="./"><i class="icon-graph"></i> &nbsp;Dashboard</a> -->
-            <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+            <!-- <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a> -->
         </div>
     </li>
 </ol>
 
-
+<form action="/admin/companies/{{ $company->slug }}/edit" method="POST" enctype="multipart/form-data">
+  {{ csrf_field() }}
+  <input type="hidden" name="_method" value="PATCH">
 <div class="container-fluid"> 
     <div class="animated fadeIn">
      <div class="row">
@@ -25,24 +27,25 @@
                     <i class="fa fa-bank"></i> Company
                 </div>
                 <div class="card-body">
+                  @include('layouts.partials.alerts')
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card text-white bg-default bg-card" id ="backdrop" style="background-image:url('/img/bg/bg1.jpg')">
+                            <div class="card text-white bg-default bg-card" id ="backdrop" style="background-image:url({{ $company->getBackdrop()  }})">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <div class="dash-logo profile-image" id = "profile" style="background-image:url('');vertical-align:middle;">
+                                        <div class="dash-logo profile-image" id = "profile" style="background-image:url({{ $company->getLogo()  }});vertical-align:middle;">
                                           <label class="btn btn-primary btn-sm pull-left btn-block" id = "change-prof" style ="margin-top:70px;display:none;">
-                                             <i class="hidden-xs-down fa fa-camera"></i> Add Photo <input type="file" name = "imgProf" id = "imgProf" style="display: none;">
+                                             <i class="hidden-xs-down fa fa-camera"></i> Add Photo <input type="file" name = "logo" id = "imgProf" style="display: none;">
                                          </label>
                                      </div>
                                  </div>
                                  <div class="col-md-9 profile-text">
-                                    <h1 class="profile-hd">Company Title</h1>
-                                    <h5 class="profile-shd">Company Description/Quote </h5>
+                                    <h1 class="profile-hd">{{ $company->title }}</h1>
+                                    <h5 class="profile-shd">{{ $company->description }}</h5>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="btn btn-success animated fadeIn pull-right" style="display: none;"  id="change-cover">
-                                     <i class="hidden-xs-down fa fa-camera"></i> Change Cover Photo <input type="file" name = "imgBack" id = "imgBack" style="display: none;">
+                                     <i class="hidden-xs-down fa fa-camera"></i> Change Cover Photo <input type="file" name = "backdrop" id = "imgBack" style="display: none;">
                                  </label>
                              </div>
                          </div>
@@ -53,51 +56,32 @@
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Company Name</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Emitifo">
+                        <input type="profile-texttext" class="form-control" id="title" placeholder="Emitifo" name="title" value="{{ $company->title }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput2">Company Description</label>
-                        <textarea type="email" class="form-control" id="exampleFormControlInput2" ></textarea>
+                        <textarea class="form-control" id="description" name="description">{{ $company->description }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput3">Email address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com" name="company_email" value="{{ $company->email }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput4">Contact</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput4" placeholder="+180399999">
+                        <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="+180399999" name="contact" value="{{ $company->contact }}">
                     </div>
 
                 </div>
                 <div class="col-md-6">
-                    <h4 class="text-muted">Admin Account Settings</h4>
-                    <hr>
-                    <div class="input-group mb-3">
-                        <span class="input-group-addon"><i class="icon-user"></i>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Username">
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <span class="input-group-addon"><i class="icon-lock"></i>
-                        </span>
-                        <input type="password" class="form-control" placeholder="Password">
-                    </div>
-
-                    <div class="input-group mb-4">
-                        <span class="input-group-addon"><i class="icon-lock"></i>
-                        </span>
-                        <input type="password" class="form-control" placeholder="Repeat password">
-                    </div>
                     <h4 class="text-muted">Twillio Account Settings</h4>
                     <hr>
                     <div class="form-group">
-                        <label for="exampleFormControlInput5">API - Key</label>
-                        <input type="email" class="form-control disabled" id="exampleFormControlInput5" disabled>
+                        <label for="exampleFormControlInput5">Code</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput5" name="code" value="{{ $company->code }}">
                     </div>
                 </div>  
                 <div class="col-md-12">
-                    <button type = "submit" class = "btn btn-primary btn-block btn-lg">Create Company</button>
+                    <button type = "submit" class = "btn btn-primary btn-block btn-lg">Update Company</button>
                 </div>
                 <!--  -->
             </div>
@@ -118,6 +102,7 @@
 
 
 </div>
+</form>
 @endsection
 
 @section('script')
@@ -195,5 +180,23 @@
             break;
         }
     });
+
+  var defaultTitle = $('.profile-hd').text();
+  $('#title').on('keyup blur', function(){
+    var value = $(this).val();
+    if(value == ''){
+      value = defaultTitle;
+    }
+    $('.profile-hd').text(value);
+  });
+
+  var defaultDescription = $('.profile-shd').text();
+  $('#description').on('keyup blur', function(){
+    var value = $(this).val();
+    if(value == ''){
+      value = defaultDescription;
+    }
+    $('.profile-shd').text(value);
+  });
 </script>
 @endsection

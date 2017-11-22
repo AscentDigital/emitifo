@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CompaniesRequest;
 use App\Company;
 use App\User;
+use File;
 
 class CompaniesController extends Controller
 {
     public function __construct(){
     	$this->middleware('auth');
+        $this->middleware('accessdenied:admin');
     }
 
     public function create(){
@@ -67,7 +69,46 @@ class CompaniesController extends Controller
     	return view('admin.companies.show', ['title' => 'Companies', 'companies' => $companies]);
     }
 
-    public function edit(){
-    	return view('admin.companies.edit');
+    public function edit(Company $company){
+    	return view('admin.companies.edit', ['title' => 'Edit ' . $company->title, 'company' => $company]);
+    }
+
+    public function update(CompaniesRequest $request, Company $company){
+        $company_details = [
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'code' => $request->input('code'),
+            'email' => $request->input('company_email'),
+            'contact' => $request->input('contact')
+        ];
+
+        if($request->input('title') != $company->title){
+             $slug = Company::makeSlugFromTitle($request->input('title'));
+             $company_details['slug'] = $slug;
+        }
+
+        $logo = $request->file('logo');
+
+        if(null !== $logo){
+            $logoname = time().'.'.$logo->getClientOriginalExtension();
+            $destinationPath = public_path('logos');
+            $logo->move($destinationPath, $logoname);
+            File::delete(public_path('logos') . '/' . $company->logo);
+            $company_details['logo'] = $logoname;
+        }
+
+        $backdrop = $request->file('backdrop');
+
+        if(null !== $backdrop){
+            $backdropname = time().'.'.$backdrop->getClientOriginalExtension();
+            $destinationPath = public_path('backdrops');
+            $backdrop->move($destinationPath, $backdropname);
+            File::delete(public_path('backdrops') . '/' . $company->backdrop);
+            $company_details['backdrop'] = $backdropname;
+        }
+
+        $company->update($company_details);
+        session()->flash('success', $request->input('title') . ' has been edited.');
+        return redirect('/admin/companies/' . $company->slug . '/edit');
     }
 }

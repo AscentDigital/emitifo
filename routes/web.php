@@ -42,7 +42,8 @@ Route::get('/admin/', 'AdminHomeController@show');
 
 Route::get('/admin/companies/create', 'CompaniesController@create');
 Route::post('/admin/companies/create', 'CompaniesController@store');
-Route::get('/admin/companies/edit', 'CompaniesController@edit');
+Route::get('/admin/companies/{company}/edit', 'CompaniesController@edit');
+Route::patch('/admin/companies/{company}/edit', 'CompaniesController@update');
 Route::get('/admin/companies/', 'CompaniesController@show');
 
 Route::get('/profile/', 'ProfileController@show');

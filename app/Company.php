@@ -10,7 +10,7 @@ class Company extends Model
 {
     use Eloquence;
 
-    protected $fillable = ['title', 'slug', 'description','code','email','logo', 'backdrop'];
+    protected $fillable = ['title', 'slug', 'description', 'contact', 'code','email','logo', 'backdrop'];
     protected $searchableColumns = ['title', 'description', 'code', 'email'];
 
     public function keywords(){
@@ -37,4 +37,16 @@ class Company extends Model
 
        return $count ? "{$slug}-{$count}" : $slug;
    }
+
+    public function getRouteKeyName() {
+        return 'slug';
+    }
+
+    public function getLogo(){
+        return '/logos/' . $this->logo;
+    }
+
+    public function getBackdrop(){
+        return '/backdrops/' . $this->backdrop;
+    }
 }
