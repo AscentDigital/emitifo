@@ -85,7 +85,24 @@
                     <div class="form-group">
                         <label for="exampleFormControlInput5">Code</label>
                         <input type="text" class="form-control" id="exampleFormControlInput5" name="code" value="{{ $company->code }}">
+                    </div>  
+                    <hr>
+                    <label for="exampleFormControlInput8">API - Key</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="apikey" name="" value="92AS-2302-2392" disabled>
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" id="show-key">Show</button>
+                      </span>
                     </div>
+                    <hr>
+                    <label for="exampleFormControlInput8">API - Secret</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="apisecret" name="" value="92AS-2302-2392" disabled>
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" id="show-secret">Show</button>
+                      </span>
+                    </div>
+                    <br>
                 </div>  
                 <div class="col-md-12">
                     <button type = "submit" class = "btn btn-primary btn-block btn-lg">Update Company</button>
@@ -113,6 +130,26 @@
 @endsection
 
 @section('script')
+<script type="text/javascript">
+$('#show-key').on('click', function () {
+   if($('#apikey').attr('type') == 'password'){
+     $('#apikey').attr('type', 'text'); 
+     $(this).html('Hide');
+   }else{
+     $('#apikey').attr('type', 'password'); 
+     $(this).html('Show');
+   }
+});
+$('#show-secret').on('click', function () {
+   if($('#apisecret').attr('type') == 'password'){
+     $('#apisecret').attr('type', 'text'); 
+     $(this).html('Hide');
+   }else{
+     $('#apisecret').attr('type', 'password'); 
+     $(this).html('Show');
+   }
+});
+</script>
 <script type="text/javascript">
   $(document).ready(function() {
     $(document).on({
