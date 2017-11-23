@@ -179,7 +179,7 @@ return [
         Nexmo\Laravel\NexmoServiceProvider::class,
         Felixkiss\UniqueWithValidator\ServiceProvider::class,
         Sofa\Eloquence\ServiceProvider::class,
-
+        Aloha\Twilio\Support\Laravel\ServiceProvider::class,
     ],
 
     /*
@@ -229,7 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Nexmo' => \Nexmo\Laravel\Facade\Nexmo::class,
-
+        'Twilio' => Aloha\Twilio\Support\Laravel\Facade::class,
     ],
 
 ];

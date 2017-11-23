@@ -87,8 +87,15 @@
               </span>
               <input type="email" class="form-control" placeholder="Email Address" name="email" value="{{ old('email') }}">
             </div>
-            <h4 class="text-muted">Twillio Account Settings</h4>
+            <h4 class="text-muted">Gateway Account Settings</h4>
             <hr>
+            <div class="form-group">
+              <label for="gateway">Gateway</label>
+              <select class="form-control" name="gateway" id="gateway">
+                <option value="twilio" @if(old('gateway') == 'twilio') selected @endif>Twilio</option>
+                <option value="nexmo" @if(old('gateway') == 'nexmo') selected @endif>Nexmo</option>
+              </select>
+            </div>
             <div class="form-group">
               <label for="exampleFormControlInput5">Code</label>
               <input type="text" class="form-control" id="exampleFormControlInput5" name="code" value="{{ old('code') }}">

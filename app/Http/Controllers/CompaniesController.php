@@ -27,7 +27,8 @@ class CompaniesController extends Controller
             'description' => $request->input('description'),
             'code' => $request->input('code'),
             'email' => $request->input('company_email'),
-            'contact' => $request->input('contact')
+            'contact' => $request->input('contact'),
+            'gateway' => $request->input('gateway')
         ];
 
         if($request->file('logo') != null){
@@ -79,7 +80,8 @@ class CompaniesController extends Controller
             'description' => $request->input('description'),
             'code' => $request->input('code'),
             'email' => $request->input('company_email'),
-            'contact' => $request->input('contact')
+            'contact' => $request->input('contact'),
+            'gateway' => $request->input('gateway')
         ];
 
         if($request->input('title') != $company->title){

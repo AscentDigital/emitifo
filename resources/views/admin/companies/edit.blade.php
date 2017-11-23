@@ -73,8 +73,15 @@
 
                 </div>
                 <div class="col-md-6">
-                    <h4 class="text-muted">Twillio Account Settings</h4>
+                    <h4 class="text-muted">Gateway Account Settings</h4>
                     <hr>
+                    <div class="form-group">
+                      <label for="gateway">Gateway</label>
+                      <select class="form-control" name="gateway" id="gateway">
+                        <option value="twilio" @if($company->gateway == 'twilio') selected @endif>Twilio</option>
+                        <option value="nexmo" @if($company->gateway == 'nexmo') selected @endif>Nexmo</option>
+                      </select>
+                    </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput5">Code</label>
                         <input type="text" class="form-control" id="exampleFormControlInput5" name="code" value="{{ $company->code }}">

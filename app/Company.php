@@ -10,7 +10,7 @@ class Company extends Model
 {
     use Eloquence;
 
-    protected $fillable = ['title', 'slug', 'description', 'contact', 'code','email','logo', 'backdrop'];
+    protected $fillable = ['title', 'slug', 'description', 'contact', 'code','email','logo', 'backdrop', 'gateway'];
     protected $searchableColumns = ['title', 'description', 'code', 'email'];
 
     public function keywords(){
