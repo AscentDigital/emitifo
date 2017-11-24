@@ -7,49 +7,113 @@ use Nexmo\Laravel\Facade\Nexmo;
 use App\Company;
 use App\Subscriber;
 use App\Message;
+use Twilio\Rest\Client;
 
 class InboundSmsController extends Controller
 {
-    public function receive(){
-    	$inbound = \Nexmo\Message\InboundMessage::createFromGlobals();
-		$code = $inbound['to'];
-		$keyword = strtolower($inbound['keyword']);
-		$from = $inbound['msisdn'];
-		$text = $inbound['text'];
-		$misc = array($inbound['messageId']);
+	public $code;
+	public $keyword;
+	public $from;
+	public $text;
+	public $misc;
+	public $twilio;
 
+    public function receive($key, $secret){
+    	$companies = Company::where(['key' => $key, 'secret' => $secret])->get();
+    	if($companies->count()){
+    		$company = $companies->first();
 
-		$companies = Company::where('code', $code)->get();
-		foreach ($companies as $company) {
-			$keywords = $company->keywords->where('keyword', $keyword);
+    		$setRequests = $this->setRequests($company->gateway);
+    		if($setRequests !== true){
+    			return $setRequests;
+    		}
+
+			$keywords = $company->keywords->where('keyword', $this->keyword);
 			if($keywords->count() > 0){
-				$inboxMessage = Message::create([
-					'number' => $from,
-					'message' => $text,
-					'misc' => json_encode($misc),
-					'type' => 'incoming',
-					'campaign_id' => $keywords->first()->campaign_id,
-					'company_id' => $keywords->first()->company_id,
-					'status' => 'received'
-				]);
-
-				$subscriber = Subscriber::where('number', $from)->first();
-				if($subscriber == null){
-					$subscriber = Subscriber::create([
-						'number' => $from
-					]);
-					$subscriber->companies()->attach($company);
-				}else{
-					if(!$subscriber->companies->contains($company)){
-						$subscriber->companies()->attach($company);
-					}
-				}
+				$keyword = $keywords->first();
+				$this->logInboundMessage($keyword);
+				$this->newSubscription($company);
+				$this->sendReply($company->gateway, $keyword);
 			}
+    	}else{
+    		return $this->response('error', 'invalid api key or secret');
+    	}
+    }
 
-			foreach ($keywords as $keyword) {
-				$result = Nexmo::message()->send([
-				    'to' => $inbound['msisdn'],
-				    'from' => $code,
+    public function setRequests($gateway){
+    	switch ($gateway) {
+			case 'nexmo':
+				$nexmo_key = env('NEXMO_KEY', false);
+				$nexmo_secret = env('NEXMO_SECRET', false);
+				if($nexmo_key == false || $nexmo_secret == false){
+					return $this->response('error', 'missing nexmo key or secret');
+				}
+				$inbound = \Nexmo\Message\InboundMessage::createFromGlobals();
+				$this->code = $inbound['to'];
+				$this->keyword = strtolower($inbound['keyword']);
+				$this->from = $inbound['msisdn'];
+				$this->text = $inbound['text'];
+				$this->misc = array($inbound['messageId']);
+				break;
+			
+			case 'twilio':
+				$twilio_sid = env('TWILIO_SID', false);
+				$twilio_token = env('TWILIO_TOKEN', false);
+				if($twilio_sid == false || $twilio_token == false){
+					return $this->response('error', 'missing twilio sid or token');
+				}
+				$from = request('from');
+				if (strpos($from, '+') !== true) { 
+				  $from = '+' . request('from');
+				}
+				$this->twilio = new Client($twilio_sid, $twilio_token);
+				$this->code = request('to');
+				$this->keyword = strtolower(strtok(request('body'), " "));
+				$this->from = $from;
+				$this->text = request('body');
+				$this->misc = request()->all();
+				break;
+		}
+		
+		return true;
+    }
+
+    public function response($result, $message){
+    	return array('result' => $result, 'message' => $message);
+    }
+
+    public function logInboundMessage($keyword){
+    	$inboxMessage = Message::create([
+			'number' => $this->from,
+			'message' => $this->text,
+			'misc' => json_encode($this->misc),
+			'type' => 'incoming',
+			'campaign_id' => $keyword->campaign_id,
+			'company_id' => $keyword->company_id,
+			'status' => 'received'
+		]);
+    }
+
+    public function newSubscription($company){
+    	$subscriber = Subscriber::where('number', $this->from)->first();
+		if($subscriber == null){
+			$subscriber = Subscriber::create([
+				'number' => $this->from
+			]);
+			$subscriber->companies()->attach($company);
+		}else{
+			if(!$subscriber->companies->contains($company)){
+				$subscriber->companies()->attach($company);
+			}
+		}
+    }
+
+    public function sendReply($gateway, $keyword){
+    	switch ($gateway) {
+    		case 'nexmo':
+    			$result = Nexmo::message()->send([
+				    'to' => $this->from,
+				    'from' => $this->code,
 				    'text' => $keyword->reply
 				]);
 
@@ -57,22 +121,60 @@ class InboundSmsController extends Controller
 				foreach ($result as $key => $value) {
 					$price = $price + $value['message-price'];
 				}
+				$misc = $result;
+    			break;
+    		
+    		case 'twilio':
+    			$result = $this->twilio->messages->create($this->from, array(
+			            "from" => $this->code,
+			            "body" => $keyword->reply
+			        )
+			    );
 
-				$message = Message::create([
-		            'number' => $from,
-		            'message' => $keyword->reply,
-		            'price' => $price,
-		            'type' => 'outgoing',
-		            'origin' => 'keyword',
-		            'campaign_id' => $keyword->campaign_id,
-		            'company_id' => $keyword->company_id,
-		            'status' => 'sent'
-		        ]);
-			}
-		}
+			    $message_details = $this->twilio->messages($result->sid)->fetch();
+			    $price = str_replace('-', '', $message_details->price);
+			    $misc = array(
+			    	'account_sid' => $message_details->accountSid,
+			    	'api_version' => $message_details->apiVersion,
+			    	'body' => $message_details->body,
+			    	'error_code' => $message_details->errorCode,
+			    	'error_message' => $message_details->errorMessage,
+			    	'num_segments' => $message_details->numSegments,
+			    	'num_media' => $message_details->numMedia,
+			    	'date_created' => $message_details->dateCreated,
+			    	'date_sent' => $message_details->dateSent,
+			    	'date_updated' => $message_details->dateUpdated,
+			    	'direction' => $message_details->direction,
+			    	'from' => $message_details->from,
+			    	'price' => $message_details->price,
+			    	'sid' => $message_details->sid,
+			    	'status' => $message_details->status,
+			    	'to' => $message_details->to,
+			    	'uri' => $message_details->uri
+			    );
+    			break;
+    	}
+
+    	$message = Message::create([
+            'number' => $this->from,
+            'message' => $keyword->reply,
+            'price' => $price,
+            'type' => 'outgoing',
+            'origin' => 'keyword',
+            'campaign_id' => $keyword->campaign_id,
+            'company_id' => $keyword->company_id,
+            'status' => 'sent',
+            'misc' => json_encode($misc)
+        ]);
     }
 
     public function test(){
-    	return 'test';
+    	$twilio_sid = env('TWILIO_SID', false);
+		$twilio_token = env('TWILIO_TOKEN', false);
+		$twilio = new Client($twilio_sid, $twilio_token);
+		$result = $twilio
+		    ->messages("SMa8c57f85bd1b44b68e2f66f2e24f6f03")
+		    ->fetch();
+		dd($result);
     }
 }
