@@ -89,7 +89,7 @@
                     <hr>
                     <label for="exampleFormControlInput8">API - Key</label>
                     <div class="input-group">
-                      <input type="password" class="form-control" id="apikey" name="" value="92AS-2302-2392" disabled>
+                      <input type="password" class="form-control" id="apikey" name="" value="{{ $company->key }}" disabled>
                       <span class="input-group-btn">
                         <button class="btn btn-primary" type="button" id="show-key">Show</button>
                       </span>
@@ -97,7 +97,7 @@
                     <hr>
                     <label for="exampleFormControlInput8">API - Secret</label>
                     <div class="input-group">
-                      <input type="password" class="form-control" id="apisecret" name="" value="92AS-2302-2392" disabled>
+                      <input type="password" class="form-control" id="apisecret" name="" value="{{ $company->secret }}" disabled>
                       <span class="input-group-btn">
                         <button class="btn btn-primary" type="button" id="show-secret">Show</button>
                       </span>

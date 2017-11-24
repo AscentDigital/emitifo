@@ -21,6 +21,8 @@ class CompaniesController extends Controller
 
     public function store(CompaniesRequest $request){
         $slug = Company::makeSlugFromTitle($request->input('title'));
+        $key = Company::generateKey();
+        $secret = Company::generateSecret();
         $company_details = [
             'title' => $request->input('title'),
             'slug' => $slug,
@@ -28,7 +30,9 @@ class CompaniesController extends Controller
             'code' => $request->input('code'),
             'email' => $request->input('company_email'),
             'contact' => $request->input('contact'),
-            'gateway' => $request->input('gateway')
+            'gateway' => $request->input('gateway'),
+            'key' => $key,
+            'secret' => $secret
         ];
 
         if($request->file('logo') != null){

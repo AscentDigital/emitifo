@@ -71,4 +71,8 @@ class InboundSmsController extends Controller
 			}
 		}
     }
+
+    public function test(){
+    	return 'test';
+    }
 }
