@@ -68,14 +68,14 @@
             </li>-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="/img/ava/boy-16.png" class="img-avatar" alt="admin">
-                    <span class="d-md-down-none">John Smith (Marketing Officer)</span>
+                    <img src="/prof_img/{{Auth::user()->avatar}}" class="img-avatar" alt="admin">
+                    <span class="d-md-down-none">{{Auth::user()->name}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
                         <strong>Account</strong>
                     </div> 
-                    <a class="dropdown-item" href="/profile/"><i class="fa fa-user"></i> Profile</a>
+                    <a class="dropdown-item" href="/{{Auth::user()->username}}/profile/"><i class="fa fa-user"></i> Profile</a>
                     <a class="dropdown-item" href="/company/"><i class="fa fa-wrench"></i> Company Settings</a> 
                     <div class="divider"></div> 
                     <a class="dropdown-item" href="/logout"><i class="fa fa-lock"></i> Logout</a>

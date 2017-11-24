@@ -43,6 +43,8 @@ Route::get('/admin/companies/{company}/edit', 'CompaniesController@edit');
 Route::patch('/admin/companies/{company}/edit', 'CompaniesController@update');
 Route::get('/admin/companies/', 'CompaniesController@show');
 
-Route::get('/profile/', 'ProfileController@show');
+Route::get('/{user}/profile', 'ProfileController@show');
+Route::post('/{user}/profile/editdetails', 'ProfileController@editdetails');
+Route::post('/{user}/profile/resetpassword', 'ProfileController@resetpassword');
 
 Route::get('/company/', 'CompanyController@show');
