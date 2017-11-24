@@ -9,6 +9,7 @@
     <meta name="description" content="SMS Campaign">
     <meta name="author" content="Ascent">
     <meta name="keyword" content="SMS campaign marketing phones health medical HIV AIDS">
+    <link rel="icon" href="/img/favicon.png">
     <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
     <title>@if(isset($title)){{ $title }}@else Emitifo @endif</title>

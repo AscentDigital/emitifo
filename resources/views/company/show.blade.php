@@ -21,7 +21,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="dash-logo profile-image" id = "profile" style="background-image:url('');vertical-align:middle;">
-                                          <label class="btn btn-primary btn-sm pull-left btn-block" id = "change-prof" style ="margin-top:70px;display:none;">
+                                          <label class="btn btn-primary btn-sm pull-left btn-block animated fadeIn" id = "change-prof" style ="margin-top:70px;display:none;">
                                              <i class="hidden-xs-down fa fa-camera"></i> Add Photo <input type="file" name = "imgProf" id = "imgProf" style="display: none;">
                                          </label>
                                      </div>
