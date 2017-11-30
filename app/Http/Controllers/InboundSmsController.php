@@ -8,6 +8,7 @@ use App\Company;
 use App\Subscriber;
 use App\Message;
 use Twilio\Rest\Client;
+use Log;
 
 class InboundSmsController extends Controller
 {
@@ -41,6 +42,7 @@ class InboundSmsController extends Controller
     }
 
     public function setRequests($gateway){
+    	Log::info(request()->all());
     	switch ($gateway) {
 			case 'nexmo':
 				$nexmo_key = env('NEXMO_KEY', false);
