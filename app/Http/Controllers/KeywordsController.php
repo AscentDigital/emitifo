@@ -32,7 +32,7 @@ class KeywordsController extends Controller
 
     public function store(KeywordRequest $request){
     	$keyword = Keyword::create([
-    		'keyword' => $request->input('keyword'),
+    		'keyword' => strtolower($request->input('keyword')),
     		'description' => $request->input('description'),
     		'reply' => $request->input('reply'),
     		'campaign_id' => $request->input('campaign_id'),
