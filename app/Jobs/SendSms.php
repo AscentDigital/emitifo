@@ -13,7 +13,7 @@ use App\Company;
 use App\SmsLog;
 use Carbon\Carbon;
 use Twilio\Rest\Client;
-
+use Log;
 class SendSms implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -84,6 +84,7 @@ class SendSms implements ShouldQueue
                     'to' => $message_details->to,
                     'uri' => $message_details->uri
                 );
+                Log::info($misc);
                 break;
         }
 

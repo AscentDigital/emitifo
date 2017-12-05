@@ -170,12 +170,12 @@ class InboundSmsController extends Controller
         ]);
     }
 
-    public function test(){
+    public function test($sid){
     	$twilio_sid = env('TWILIO_SID', false);
 		$twilio_token = env('TWILIO_TOKEN', false);
 		$twilio = new Client($twilio_sid, $twilio_token);
 		$result = $twilio
-		    ->messages("SMa8c57f85bd1b44b68e2f66f2e24f6f03")
+		    ->messages($sid)
 		    ->fetch();
 		dd($result);
     }
