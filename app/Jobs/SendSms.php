@@ -63,7 +63,12 @@ class SendSms implements ShouldQueue
                     )
                 );
 
-                $message_details = $twilio->messages($result->sid)->fetch();
+                $attempts = 0;
+                do{
+                    $message_details = $twilio->messages($result->sid)->fetch();
+                    $attempts++;
+                }while($message_details->price == null && $attempts <= 5);
+                
                 $price = str_replace('-', '', $message_details->price);
                 $misc = array(
                     'account_sid' => $message_details->accountSid,
