@@ -24,7 +24,7 @@ class Message extends Model
     }
 
     public function getSender(){
-    	$sender = 'PrEPSMS';
+    	$sender = $this->company->title;
     	if($this->type == 'incoming'){
     		$sender = $this->number;
     	}
@@ -33,7 +33,7 @@ class Message extends Model
     }
 
     public function getRecipient(){
-    	$recipient = 'PrEPSMS';
+    	$recipient = $this->company->title;
     	if($this->type == 'outgoing'){
     		$recipient = $this->number;
     	}
