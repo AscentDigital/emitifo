@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::match(['get', 'post'], '/inbound/{key}/{secret}', 'InboundSmsController@receive');
-Route::match(['get', 'post'], '/test', 'InboundSmsController@test');
+Route::match(['get', 'post'], '/test/{sid}', 'InboundSmsController@test');

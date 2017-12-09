@@ -64,15 +64,15 @@ class InboundSmsController extends Controller
 				if($twilio_sid == false || $twilio_token == false){
 					return $this->response('error', 'missing twilio sid or token');
 				}
-				$from = request('from');
+				$from = request('From');
 				if (strpos($from, '+') !== true) { 
-				  $from = '+' . request('from');
+				  $from = '+' . request('From');
 				}
 				$this->twilio = new Client($twilio_sid, $twilio_token);
-				$this->code = request('to');
-				$this->keyword = strtolower(strtok(request('body'), " "));
+				$this->code = request('To');
+				$this->keyword = strtolower(strtok(request('Body'), " "));
 				$this->from = $from;
-				$this->text = request('body');
+				$this->text = request('Body');
 				$this->misc = request()->all();
 				break;
 		}
@@ -170,12 +170,12 @@ class InboundSmsController extends Controller
         ]);
     }
 
-    public function test(){
+    public function test($sid){
     	$twilio_sid = env('TWILIO_SID', false);
 		$twilio_token = env('TWILIO_TOKEN', false);
 		$twilio = new Client($twilio_sid, $twilio_token);
 		$result = $twilio
-		    ->messages("SMa8c57f85bd1b44b68e2f66f2e24f6f03")
+		    ->messages($sid)
 		    ->fetch();
 		dd($result);
     }
