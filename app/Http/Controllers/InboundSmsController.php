@@ -65,9 +65,6 @@ class InboundSmsController extends Controller
 					return $this->response('error', 'missing twilio sid or token');
 				}
 				$from = request('From');
-				if (strpos($from, '+') !== true) { 
-				  $from = '+' . request('From');
-				}
 				$this->twilio = new Client($twilio_sid, $twilio_token);
 				$this->code = request('To');
 				$this->keyword = strtolower(strtok(request('Body'), " "));
